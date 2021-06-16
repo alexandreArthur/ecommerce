@@ -1,8 +1,8 @@
 package com.ecommerce.services;
 
 import com.ecommerce.domain.Categoria;
+import com.ecommerce.exceptions.ObjectNotFoundException;
 import com.ecommerce.repositories.CategoriaRepository;
-import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +16,7 @@ public class CategoriaService {
 
     public Categoria buscar(Integer id){
         Optional<Categoria> categoria = repo.findById(id);
-        return categoria.get();
+        return categoria.orElseThrow(() -> new ObjectNotFoundException(
+                "Object not found! Id: "+id +", type:" + Categoria.class.getName()));
     }
 }
