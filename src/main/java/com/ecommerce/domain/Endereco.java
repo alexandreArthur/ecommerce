@@ -1,5 +1,6 @@
 package com.ecommerce.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,9 +23,11 @@ public class Endereco implements Serializable {
     private String bairro;
     private String cep;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Cliente cliente;
+
     @ManyToOne
     @JoinColumn(name = "cidade_id")
     private Cidade cidade;
