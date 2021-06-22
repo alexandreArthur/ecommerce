@@ -10,7 +10,6 @@ import java.util.Date;
 
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class Pedido implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -22,7 +21,19 @@ public class Pedido implements Serializable {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
     private Pagamento pagamento;
 
+    @ManyToOne
+    @JoinColumn(name="cliente_id")
     private Cliente cliente;
 
+    @ManyToOne
+    @JoinColumn(name = "endereco_entrega_id")
     private Endereco enderecoEntrega;
+
+    public Pedido(Integer id, Date instante, Cliente cliente, Endereco enderecoEntrega) {
+        super();
+        this.id = id;
+        Instante = instante;
+        this.cliente = cliente;
+        this.enderecoEntrega = enderecoEntrega;
+    }
 }
