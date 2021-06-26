@@ -1,8 +1,7 @@
 package com.ecommerce.domain;
 
 import com.ecommerce.Enums.EstadoPagamento;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
@@ -13,7 +12,9 @@ import java.util.Date;
 public class PagamentoComBoleto extends Pagamento{
     private static final long serialVersionUID = 1L;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date dataVencimento;
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date dataPagamento;
 
     public PagamentoComBoleto(Date dataVencimento, Date dataPagamento) {

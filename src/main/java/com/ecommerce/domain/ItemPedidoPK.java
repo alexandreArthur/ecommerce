@@ -33,16 +33,5 @@ public class ItemPedidoPK implements Serializable {
         this.produto = produto;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ItemPedidoPK that = (ItemPedidoPK) o;
-        return pedido.equals(that.pedido) && produto.equals(that.produto);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(pedido, produto);
-    }
 }
