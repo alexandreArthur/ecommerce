@@ -1,9 +1,11 @@
 package com.ecommerce.services;
 
 import com.ecommerce.domain.Categoria;
+import com.ecommerce.exceptions.DataIntegrityException;
 import com.ecommerce.exceptions.ObjectNotFoundException;
 import com.ecommerce.repositories.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -29,5 +31,15 @@ public class CategoriaService {
     public Categoria put(Categoria obj) {
         find(obj.getId());
         return repo.save(obj);
+    }
+
+    public void delete(Integer id) {
+        find(id);
+        try{
+            repo.deleteById(id);
+        }catch (DataIntegrityViolationException e){
+            throw new DataIntegrityException("Não é possível exceluir uma categoria com produtos!");
+        }
+
     }
 }
