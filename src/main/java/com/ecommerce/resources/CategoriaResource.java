@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,22 +46,23 @@ public class CategoriaResource {
 
         Page<Categoria> list = service.findByPages(page,linesPerPage,orderBy,direction);
         Page<CategoriaDTO> listDto = list.map(CategoriaDTO::new);
-        
+
         return ResponseEntity.ok().body(listDto);
 
     }
 
     @PostMapping
-    public ResponseEntity<Void> insert(@RequestBody Categoria obj){
+    public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDto){
+       Categoria obj = service.fromDTO(objDto);
         obj = service.insert(obj);
-
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(obj.getId()).toUri();
 
         return ResponseEntity.created(uri).build();
     }
     @PutMapping(value="/{id}")
-    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody Categoria obj){
+    public ResponseEntity<Void> update(@Valid @PathVariable Integer id, @RequestBody CategoriaDTO objDTO){
+        Categoria obj = service.fromDTO(objDTO);
         obj.setId(id);
         service.put(obj);
         return ResponseEntity.noContent().build();

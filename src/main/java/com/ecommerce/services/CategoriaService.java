@@ -1,6 +1,7 @@
 package com.ecommerce.services;
 
 import com.ecommerce.domain.Categoria;
+import com.ecommerce.dto.CategoriaDTO;
 import com.ecommerce.exceptions.DataIntegrityException;
 import com.ecommerce.exceptions.ObjectNotFoundException;
 import com.ecommerce.repositories.CategoriaRepository;
@@ -55,5 +56,9 @@ public class CategoriaService {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction),
                 orderBy);
         return repo.findAll(pageRequest);
+    }
+
+    public Categoria fromDTO(CategoriaDTO objDto){
+        return new Categoria(objDto.getId(), objDto.getNome());
     }
 }
