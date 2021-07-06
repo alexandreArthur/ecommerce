@@ -1,14 +1,14 @@
 package com.ecommerce.domain;
 
 import com.ecommerce.Enums.EstadoPagamento;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 
 @Entity
 @NoArgsConstructor
+@JsonTypeName("pagamentoComCartao")
 public class PagamentoComCartao extends Pagamento{
     private static final long serialVersionUID = 1L;
 

@@ -2,6 +2,7 @@ package com.ecommerce.domain;
 
 import com.ecommerce.Enums.EstadoPagamento;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import java.util.Date;
 
 @Entity
 @NoArgsConstructor
+@JsonTypeName("pagamentoComBoleto")
 public class PagamentoComBoleto extends Pagamento{
     private static final long serialVersionUID = 1L;
 

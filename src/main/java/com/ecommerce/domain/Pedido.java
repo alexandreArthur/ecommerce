@@ -58,9 +58,9 @@ public class Pedido implements Serializable {
         this.id = id;
     }
 
-    //public Date getInstante() {
-    //    return Instante; !desnecessário.
-   // }
+    public Date getInstante() {
+        return Instante; //Instante está plotando 2 vezes.(investigar depois)
+    }
 
     public void setInstante(Date instante) {
         Instante = instante;
