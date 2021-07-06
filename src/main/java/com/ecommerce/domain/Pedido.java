@@ -42,6 +42,14 @@ public class Pedido implements Serializable {
         this.enderecoEntrega = enderecoEntrega;
     }
 
+    public double getValorTotal(){
+        double soma =0.0;
+        for(ItemPedido ip: itens){
+            soma = soma + ip.getSubTotal();
+        }
+        return soma;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -50,9 +58,9 @@ public class Pedido implements Serializable {
         this.id = id;
     }
 
-    public Date getInstante() {
-        return Instante;
-    }
+    //public Date getInstante() {
+    //    return Instante; !desnecessário.
+   // }
 
     public void setInstante(Date instante) {
         Instante = instante;
