@@ -5,10 +5,9 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Entity
 @NoArgsConstructor
@@ -109,5 +108,28 @@ public class Pedido implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        final StringBuffer sb = new StringBuffer("Pedido{");
+        sb.append("Pedido número: ");
+        sb.append(getId());
+        sb.append(", Instante: ");
+        sb.append(sdf.format(getInstante()));
+        sb.append(", Cliente: ");
+        sb.append(getCliente().getNome());
+        sb.append(", situação do pagamento: ");
+        sb.append(getPagamento().getEstado().getDescricao());
+        sb.append("\n Detalhes: \n");
+        for(ItemPedido ip: getItens()){
+            sb.append(ip.toString());
+        }
+        sb.append("Valor total: ");
+        sb.append(nf.format(getValorTotal()));
+        sb.append('}');
+        return sb.toString();
     }
 }
