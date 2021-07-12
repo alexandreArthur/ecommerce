@@ -1,5 +1,6 @@
 package com.ecommerce.domain;
 
+import com.ecommerce.Enums.Perfil;
 import com.ecommerce.Enums.TipoCliente;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.NoArgsConstructor;
@@ -7,9 +8,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
-@NoArgsConstructor
 public class Cliente implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -32,9 +33,17 @@ public class Cliente implements Serializable {
     @CollectionTable(name="TELEFONES")
     private Set<String> telefones = new HashSet<>();
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "PERFIS")
+    private Set<Integer> perfis = new HashSet<>();
+
     @OneToMany(mappedBy = "cliente")
     @JsonIgnore
     private List<Pedido> pedidos= new ArrayList<>();
+
+    public Cliente(){
+        addPerfil(Perfil.CLIENT);
+    }
 
     public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo, String senha) {
         this.id = id;
@@ -43,6 +52,7 @@ public class Cliente implements Serializable {
         this.cpfOuCnpj = cpfOuCnpj;
         this.tipo = (tipo==null) ? null: tipo.getCod();
         this.senha = senha;
+        addPerfil(Perfil.CLIENT);
     }
 
     public Integer getId() {
@@ -92,6 +102,14 @@ public class Cliente implements Serializable {
     public List<Endereco> getEnderecos() {
         return enderecos;
     }
+
+    public Set<Perfil> getPerfil(){
+        return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
+    }
+    public void addPerfil(Perfil perfil){
+        perfis.add(perfil.getCod());
+    }
+
 
     public void setEnderecos(List<Endereco> enderecos) {
         this.enderecos = enderecos;
