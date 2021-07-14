@@ -1,9 +1,6 @@
 package com.ecommerce.resources;
 
-import com.ecommerce.domain.Categoria;
-import com.ecommerce.domain.Pedido;
 import com.ecommerce.domain.Produto;
-import com.ecommerce.dto.CategoriaDTO;
 import com.ecommerce.dto.ProdutoDTO;
 import com.ecommerce.resources.util.URL;
 import com.ecommerce.services.ProdutoService;
