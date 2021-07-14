@@ -1,15 +1,18 @@
 package com.ecommerce.services;
 
+import com.ecommerce.Enums.Perfil;
 import com.ecommerce.Enums.TipoCliente;
 import com.ecommerce.domain.Cidade;
 import com.ecommerce.domain.Cliente;
 import com.ecommerce.domain.Endereco;
 import com.ecommerce.dto.ClienteDTO;
 import com.ecommerce.dto.ClienteNewDTO;
+import com.ecommerce.exceptions.AuthorizationException;
 import com.ecommerce.exceptions.DataIntegrityException;
 import com.ecommerce.exceptions.ObjectNotFoundException;
 import com.ecommerce.repositories.ClienteRepository;
 import com.ecommerce.repositories.EnderecoRepository;
+import com.ecommerce.security.UserSS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -34,6 +37,12 @@ public class ClienteService {
     private EnderecoRepository enderecoRepository;
 
     public Cliente find(Integer id){
+
+        UserSS user = userService.authenticated();
+        if(user==null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())){
+            throw new AuthorizationException("Acesso negado");
+        }
+
         Optional<Cliente> cliente = repo.findById(id);
         return cliente.orElseThrow(() -> new ObjectNotFoundException(
                 "Object not found! Id: "+id +", type:" + Cliente.class.getName()));
@@ -98,6 +107,8 @@ public class ClienteService {
 
         return cli;
     }
+
+
 
 
 

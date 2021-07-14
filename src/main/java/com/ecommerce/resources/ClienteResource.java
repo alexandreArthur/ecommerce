@@ -1,8 +1,6 @@
 package com.ecommerce.resources;
 
-import com.ecommerce.domain.Categoria;
 import com.ecommerce.domain.Cliente;
-import com.ecommerce.dto.CategoriaDTO;
 import com.ecommerce.dto.ClienteDTO;
 import com.ecommerce.dto.ClienteNewDTO;
 import com.ecommerce.services.ClienteService;
@@ -41,6 +39,7 @@ public class ClienteResource {
         return ResponseEntity.ok().body(obj);
 
     }
+
     @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping
     public ResponseEntity<List<ClienteDTO>> findAll(){

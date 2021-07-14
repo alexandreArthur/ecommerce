@@ -1,7 +1,7 @@
 package com.ecommerce.Enums;
 
 public enum Perfil {
-    ADMIN(1, "ROLE_ADMIN"),CLIENT(2, "ROLE_CLIENT");
+    ADMIN(1, "ROLE_ADMIN"),CLIENT(2, "ROLE_CLIENTE");
 
     private int cod;
     private String descricao;
