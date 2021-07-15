@@ -1,14 +1,17 @@
 package com.ecommerce.services;
 
 import com.ecommerce.Enums.EstadoPagamento;
-import com.ecommerce.domain.ItemPedido;
-import com.ecommerce.domain.PagamentoComBoleto;
-import com.ecommerce.domain.Pedido;
+import com.ecommerce.domain.*;
+import com.ecommerce.exceptions.AuthorizationException;
 import com.ecommerce.exceptions.ObjectNotFoundException;
 import com.ecommerce.repositories.ItemPedidoRepository;
 import com.ecommerce.repositories.PagamentoRepository;
 import com.ecommerce.repositories.PedidoRepository;
+import com.ecommerce.security.UserSS;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +37,7 @@ public class PedidoService {
     private ClienteService clienteService;
     @Autowired
     private EmailService emailService;
+
 
     public Pedido find(Integer id){
         Optional<Pedido> Pedido = repo.findById(id);
@@ -66,4 +70,18 @@ public class PedidoService {
         return obj;
 
     }
+
+    public Page<Pedido> findByPages(Integer page, Integer linesPerPage, String orderBy, String direction){
+        UserSS user = userService.authenticated();
+        if(user == null){
+            throw new AuthorizationException("Acesso negado.");
+        }
+        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
+
+        Cliente cliente = clienteService.find(user.getId());
+        return repo.findByCliente(cliente, pageRequest);
+
+    }
+
+
 }
