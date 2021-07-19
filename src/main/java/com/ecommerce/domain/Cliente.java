@@ -3,7 +3,9 @@ package com.ecommerce.domain;
 import com.ecommerce.Enums.Perfil;
 import com.ecommerce.Enums.TipoCliente;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -41,9 +43,15 @@ public class Cliente implements Serializable {
     @JsonIgnore
     private List<Pedido> pedidos= new ArrayList<>();
 
+    @Getter
+    @Setter
+    private String imageUrl;
+
+
     public Cliente(){
         addPerfil(Perfil.CLIENT);
     }
+
 
     public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo, String senha) {
         this.id = id;
