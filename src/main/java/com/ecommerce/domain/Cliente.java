@@ -43,10 +43,6 @@ public class Cliente implements Serializable {
     @JsonIgnore
     private List<Pedido> pedidos= new ArrayList<>();
 
-    @Getter
-    @Setter
-    private String imageUrl;
-
 
     public Cliente(){
         addPerfil(Perfil.CLIENT);
