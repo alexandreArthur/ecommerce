@@ -34,6 +34,9 @@ public class ClienteService {
     @Value("${img.prefix.client.profile}")
     private String prefix;
 
+    @Value("${img.profile.size}")
+    private Integer size;
+
     @Autowired
     private BCryptPasswordEncoder pe;
 
@@ -127,6 +130,11 @@ public class ClienteService {
             throw new AuthorizationException("Acesso negado.");
         }
         BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+
+        jpgImage = imageService.cropSquare(jpgImage);
+
+        jpgImage = imageService.resize(jpgImage, size);
+
 
         String fileName = prefix + user.getId()+".jpg";
 
